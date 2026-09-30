@@ -1,0 +1,67 @@
+.MODEL SMALL
+.STACK 100H
+.DATA  
+    TEXT DB "ENTER THE LETTER: $" 
+    TEXT2 DB 10,13,"THE LOWER CASE IS: $"   
+    TEXT3 DB 10,13,"THE UPPER CASE IS: $"
+    VAL DB ?    
+.CODE
+MAIN PROC
+    MOV AX,@DATA
+    MOV DS,AX
+    
+    
+    MOV AH,09
+    LEA DX,TEXT
+    INT 21H 
+    
+    MOV AH,01
+    INT 21H 
+    MOV VAL,AL
+    
+    CMP VAL,96 
+    JL LOWER 
+    JG UPPER
+ 
+    LOWER:
+     
+    MOV AH,09
+    LEA DX,TEXT2
+    INT 21H 
+    ADD VAL,32
+    JMP OUTPUT
+   
+    UPPER:
+    
+    MOV AH,09
+    LEA DX,TEXT3
+    INT 21H
+    SUB VAL,32
+    JMP OUTPUT
+
+    OUTPUT:
+    MOV AH,02
+    MOV DL,VAL
+    INT 21H
+    MOV AH,4CH
+    INT 21H
+    MAIN ENDP
+END MAIN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
